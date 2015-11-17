@@ -17,6 +17,7 @@
 		620245A11BF9CFB500ED418D /* VoteTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620245A01BF9CFB500ED418D /* VoteTableViewController.swift */; };
 		620245A31BF9CFC400ED418D /* ResultTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620245A21BF9CFC400ED418D /* ResultTableViewController.swift */; };
 		620245A51BF9D16B00ED418D /* ItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620245A41BF9D16B00ED418D /* ItemModel.swift */; };
+		620C41681BFABB4100D5530B /* VoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620C41671BFABB4100D5530B /* VoteViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		620245A01BF9CFB500ED418D /* VoteTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteTableViewController.swift; sourceTree = "<group>"; };
 		620245A21BF9CFC400ED418D /* ResultTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultTableViewController.swift; sourceTree = "<group>"; };
 		620245A41BF9D16B00ED418D /* ItemModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemModel.swift; sourceTree = "<group>"; };
+		620C41671BFABB4100D5530B /* VoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoteViewController.swift; path = ../VoteViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				620245721BF9C87000ED418D /* AppDelegate.swift */,
+				620C41671BFABB4100D5530B /* VoteViewController.swift */,
 				620245741BF9C87000ED418D /* ViewController.swift */,
 				620245761BF9C87000ED418D /* Main.storyboard */,
 				620245A01BF9CFB500ED418D /* VoteTableViewController.swift */,
@@ -266,6 +269,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				620C41681BFABB4100D5530B /* VoteViewController.swift in Sources */,
 				620245A51BF9D16B00ED418D /* ItemModel.swift in Sources */,
 				620245A31BF9CFC400ED418D /* ResultTableViewController.swift in Sources */,
 				620245751BF9C87000ED418D /* ViewController.swift in Sources */,
@@ -501,6 +505,7 @@
 				620245991BF9C87000ED418D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6202459A1BF9C87000ED418D /* Build configuration list for PBXNativeTarget "VoteVoteVoteTests" */ = {
 			isa = XCConfigurationList;
@@ -509,6 +514,7 @@
 				6202459C1BF9C87000ED418D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6202459D1BF9C87000ED418D /* Build configuration list for PBXNativeTarget "VoteVoteVoteUITests" */ = {
 			isa = XCConfigurationList;
@@ -517,6 +523,7 @@
 				6202459F1BF9C87000ED418D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

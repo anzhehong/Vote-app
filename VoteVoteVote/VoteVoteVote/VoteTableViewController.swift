@@ -59,5 +59,6 @@ class VoteTableViewController: UITableViewController {
         itemToChange.voteCount = itemToChange.voteCount! + 1
         dataList![sender.tag] = itemToChange.modelToNSData()!
         NSUserDefaults.standardUserDefaults().setObject(dataList, forKey: "items")
+        UIAlertView(title: "great", message: "成功投了一票", delegate: self, cancelButtonTitle: "下一票").show()
     }
 }
