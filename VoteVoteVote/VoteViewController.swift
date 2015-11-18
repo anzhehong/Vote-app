@@ -15,6 +15,11 @@ class VoteViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        super.viewWillAppear(animated)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -22,8 +27,8 @@ class VoteViewController: UIViewController {
     }
     
     @IBAction func showResult(sender: UIButton) {
-        var userDefault = NSUserDefaults.standardUserDefaults()
-        if let object = userDefault.objectForKey("items"){
+        let userDefault = NSUserDefaults.standardUserDefaults()
+        if let _ = userDefault.objectForKey("items"){
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("result")
             self.navigationController?.pushViewController(vc!, animated: true)
         }else{

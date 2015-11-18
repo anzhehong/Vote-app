@@ -26,6 +26,11 @@ class ResultTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        firstLabel.layer.cornerRadius = 25
+        secondLabel.layer.cornerRadius = 25
+        thirdLabel.layer.cornerRadius = 25
+        
         dataList = (userDefault as! [NSData])
         let itemList = sortDataListDes(dataList)
         let count = itemList.count
@@ -52,9 +57,7 @@ class ResultTableViewController: UITableViewController {
                 thirdLabel.hidden = true
             }
         }
-//        print(itemList[0].voteCount)
-//        print(itemList[1].voteCount)
-//        print(itemList[2].voteCount)
+        
     }
     
     func sortDataListDes(dataList: [NSData])->[ItemModel] {
@@ -76,7 +79,7 @@ class ResultTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let userDefault = NSUserDefaults.standardUserDefaults().objectForKey("items"){
+        if let _ = NSUserDefaults.standardUserDefaults().objectForKey("items"){
             return 3
         }
         return 0

@@ -12,7 +12,6 @@ class VoteTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
 
     // MARK: - Table view data source
@@ -55,7 +54,7 @@ class VoteTableViewController: UITableViewController {
 //        print(sender.tag)
         let userDefault = NSUserDefaults.standardUserDefaults().objectForKey("items")
         var dataList = userDefault as? [NSData]
-        var itemToChange = ItemModel.NSDataToModel(dataList![sender.tag])
+        let itemToChange = ItemModel.NSDataToModel(dataList![sender.tag])
         itemToChange.voteCount = itemToChange.voteCount! + 1
         dataList![sender.tag] = itemToChange.modelToNSData()!
         NSUserDefaults.standardUserDefaults().setObject(dataList, forKey: "items")

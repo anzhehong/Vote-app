@@ -14,6 +14,10 @@ class ViewController: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var ideaTextField: UITextField!
 
+    @IBOutlet weak var addIdeaButton: UIButton!
+    
+    @IBOutlet weak var startVotingButton: UIButton!
+    
     var itemModel: ItemModel?
     var presentItemCount = 0
     
@@ -22,12 +26,39 @@ class ViewController: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         nameTextField.delegate = self
         ideaTextField.delegate = self
-        // Do any additional setup after loading the view, typically from a nib.
+        updateUI()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        super.viewWillAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    private func setTextFieldStyle(textField: UITextField) {
+        textField.borderStyle = UITextBorderStyle.None
+        textField.layer.borderColor = UIColor.whiteColor().CGColor
+        textField.layer.borderWidth = 2.0
+        textField.layer.cornerRadius = 25.0
+        let paddingView = UIView(frame: CGRectMake(0, 0, 25, 25))
+        textField.leftView = paddingView
+        textField.leftViewMode = UITextFieldViewMode.Always
+    }
+    
+    private func setButtonStyle(button: UIButton){
+        button.layer.cornerRadius = 25.0
+    }
+    
+    private func updateUI(){
+        setTextFieldStyle(nameTextField)
+        setTextFieldStyle(ideaTextField)
+        setButtonStyle(addIdeaButton)
+        setButtonStyle(startVotingButton)
     }
     
     
@@ -38,16 +69,18 @@ class ViewController: UIViewController,UITextFieldDelegate {
         let currentItem = ItemModel()
         currentItem.name = nameTextField.text
         currentItem.idea = ideaTextField.text
-        currentItem.voteCount = 0
-
-        if let list = currentDefault.objectForKey("items") {
-            //MARK: - 已经存在此userdefault
-            addThisItemToUserDefault(currentItem)
-            
-        }else {
-            //MARK: - 需要新建此userdefault
-            currentDefault.setObject([NSData](), forKey: "items")
-            addThisItemToUserDefault(currentItem)
+        if currentItem.name == "" || currentItem.idea == "" {
+            UIAlertView(title: "增加项目", message: "请输入有效内容！", delegate: nil, cancelButtonTitle: "ok").show()
+        } else {
+            currentItem.voteCount = 0
+            if let _ = currentDefault.objectForKey("items") {
+                //MARK: - 已经存在此userdefault
+                addThisItemToUserDefault(currentItem)
+            }else {
+                //MARK: - 需要新建此userdefault
+                currentDefault.setObject([NSData](), forKey: "items")
+                addThisItemToUserDefault(currentItem)
+            }
         }
     }
     
