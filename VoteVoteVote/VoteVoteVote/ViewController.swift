@@ -20,7 +20,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
     
     var itemModel: ItemModel?
     var presentItemCount = 0
-    
+    var isTheViewUp = false
+    var keyboardHeight: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -74,10 +76,10 @@ class ViewController: UIViewController,UITextFieldDelegate {
         } else {
             currentItem.voteCount = 0
             if let _ = currentDefault.objectForKey("items") {
-                //MARK: - 已经存在此userdefault
+                //已经存在此userdefault
                 addThisItemToUserDefault(currentItem)
             }else {
-                //MARK: - 需要新建此userdefault
+                //需要新建此userdefault
                 currentDefault.setObject([NSData](), forKey: "items")
                 addThisItemToUserDefault(currentItem)
             }
@@ -93,17 +95,53 @@ class ViewController: UIViewController,UITextFieldDelegate {
     }
     
     //MARK: - keyboard
+    func keyboardWillShow(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            if let keyboardSize =  (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
+                keyboardHeight = keyboardSize.height
+            }
+        }
+    }
     //MARK: - UITextFildDelegate
+    func textFieldDidBeginEditing(textField: UITextField) {
+        viewGoesUpWithTextField(textField)
+    }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
         textField.resignFirstResponder()
-        nameTextField.resignFirstResponder()
-        ideaTextField.resignFirstResponder()
+        
         return true
     }
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        //        changedValueTextField.resignFirstResponder()
         nameTextField.resignFirstResponder()
         ideaTextField.resignFirstResponder()
+        if isTheViewUp {
+            viewGoesUpWithTextField(nil)
+        }
+    }
+    
+    func viewGoesUpWithTextField(textField: UITextField?) {
+        var offset = 0 as CGFloat
+        
+        if textField != nil {
+            let textFieldY = textField!.frame.origin.y
+            let frameHeight = self.view.frame.size.height
+            let addition = keyboardHeight + 50 as CGFloat
+            offset = addition + textFieldY - frameHeight
+        }
+        let width = self.view.frame.size.width;
+        let height = self.view.frame.size.height;
+        
+        UIView.animateWithDuration(0.30, animations: {
+            if offset > 0 {
+                self.view.frame = CGRectMake(0.0, -offset, width, height)
+            } else {
+                self.view.frame = CGRectMake(0.0, 0.0, width, height)
+            }
+        })
+        
+        isTheViewUp = !isTheViewUp
     }
 
 

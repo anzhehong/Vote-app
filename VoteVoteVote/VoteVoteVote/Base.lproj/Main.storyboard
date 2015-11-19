@@ -57,9 +57,11 @@
                                 <animations/>
                                 <color key="backgroundColor" red="0.94881563278486536" green="1" blue="0.80195554361455468" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="Gea-ZT-h23"/>
+                                    <constraint firstAttribute="height" constant="55" id="Gea-ZT-h23">
+                                        <variation key="heightClass=compact" constant="50"/>
+                                    </constraint>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <state key="normal" title="Add Idea">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -73,9 +75,11 @@
                                 <animations/>
                                 <color key="backgroundColor" red="0.74505220400399585" green="0.83578145271253468" blue="0.94770533376963351" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="crR-AF-3JE"/>
+                                    <constraint firstAttribute="height" constant="55" id="crR-AF-3JE">
+                                        <variation key="heightClass=compact" constant="50"/>
+                                    </constraint>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <state key="normal" title="Start Voting">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -88,6 +92,7 @@
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="STI-ns-kFW"/>
+                                    <constraint firstAttribute="width" constant="198" id="Teg-Ch-Soe"/>
                                     <constraint firstAttribute="width" constant="350" id="WfM-Mh-587"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="476" id="zZc-oL-byG"/>
                                 </constraints>
@@ -96,7 +101,14 @@
                                 <textInputTraits key="textInputTraits"/>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="Teg-Ch-Soe"/>
                                         <exclude reference="zZc-oL-byG"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="Teg-Ch-Soe"/>
+                                        <exclude reference="WfM-Mh-587"/>
                                     </mask>
                                 </variation>
                             </textField>
@@ -130,7 +142,10 @@
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="300" id="SVh-oJ-bVg">
+                                        <variation key="heightClass=compact" constant="100"/>
                                         <variation key="heightClass=regular" constant="400"/>
+                                        <variation key="widthClass=compact" constant="200"/>
+                                        <variation key="heightClass=compact-widthClass=compact" constant="100"/>
                                     </constraint>
                                     <constraint firstAttribute="width" secondItem="TRg-Hh-5hI" secondAttribute="height" multiplier="1:1" id="jve-DJ-Xw1"/>
                                 </constraints>
@@ -139,6 +154,9 @@
                                 <rect key="frame" x="20" y="475.5" width="560" height="17"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <variation key="heightClass=compact-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="20" y="278.5" width="360" height="17.5"/>
+                                </variation>
                             </view>
                         </subviews>
                         <animations/>
