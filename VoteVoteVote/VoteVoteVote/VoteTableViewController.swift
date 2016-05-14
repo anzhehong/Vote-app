@@ -36,20 +36,18 @@ class VoteTableViewController: UITableViewController {
         if let button = cell.viewWithTag(103) as? UIButton {
             button.tag = indexPath.row
             //        test(button)
-            button.addTarget(self, action: "addFunction:", forControlEvents: UIControlEvents.TouchUpInside)
+            button.addTarget(self, action: #selector(VoteTableViewController.addFunction(_:)), forControlEvents: UIControlEvents.TouchUpInside)
             // Configure the cell...
         }
-//        var button = cell.viewWithTag(103) as! UIButton
         
-        if let userDefault = NSUserDefaults.standardUserDefaults().objectForKey("items"){
+        if let userDefault = NSUserDefaults.standardUserDefaults().objectForKey("items") {
             let dataList = userDefault as? [NSData]
             let currentName = ItemModel.NSDataToModel(dataList![indexPath.row]).name
-            let currentIdea = ItemModel.NSDataToModel(dataList![indexPath.row]).idea
             (cell.viewWithTag(101) as! UILabel).text = currentName
-            (cell.viewWithTag(102) as! UILabel).text = currentIdea
         }
         return cell
     }
+    
     func addFunction(sender:UIButton) {
 //        print(sender.tag)
         let userDefault = NSUserDefaults.standardUserDefaults().objectForKey("items")
@@ -58,6 +56,16 @@ class VoteTableViewController: UITableViewController {
         itemToChange.voteCount = itemToChange.voteCount! + 1
         dataList![sender.tag] = itemToChange.modelToNSData()!
         NSUserDefaults.standardUserDefaults().setObject(dataList, forKey: "items")
-        UIAlertView(title: "great", message: "成功投了一票", delegate: self, cancelButtonTitle: "下一票").show()
+        
+        UIView.animateWithDuration(0.2, animations: {
+                sender.transform = CGAffineTransformMakeScale(1.05, 1.05)
+            }, completion: {(true) in
+                sender.transform = CGAffineTransformMakeScale(1, 1)
+                
+                let alertView = UIAlertController(title: "Great", message: "成功投了一票", preferredStyle: .Alert)
+                alertView.addAction(UIAlertAction(title: "下一票", style: .Default, handler: nil))
+                self.presentViewController(alertView, animated: true, completion: nil)
+        })
+        
     }
 }

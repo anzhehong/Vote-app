@@ -9,11 +9,9 @@
 import UIKit
 
 class ResultTableViewController: UITableViewController {
-    @IBOutlet weak var firstIdeaLabel: UILabel!
+
     @IBOutlet weak var firstNameLabel: UILabel!
-    @IBOutlet weak var secondIdeaLabel: UILabel!
     @IBOutlet weak var secondNameLabel: UILabel!
-    @IBOutlet weak var thirdIdeaLabel: UILabel!
     @IBOutlet weak var thirdNameLabel: UILabel!
     
     
@@ -36,22 +34,16 @@ class ResultTableViewController: UITableViewController {
         let count = itemList.count
         if count > 0{
             firstNameLabel.text = itemList[0].name
-            firstIdeaLabel.text = itemList[0].idea
             if count > 1 {
                 secondNameLabel.text = itemList[1].name
-                secondIdeaLabel.text = itemList[1].idea
                 if count > 2 {
                     thirdNameLabel.text = itemList[2].name
-                    thirdIdeaLabel.text = itemList[2].idea
                 }else {
                     thirdNameLabel.text = ""
-                    thirdIdeaLabel.text = ""
                     thirdLabel.hidden = true
                 }
             }else {
-                secondIdeaLabel.text = ""
                 secondNameLabel.text = ""
-                thirdIdeaLabel.text = ""
                 thirdNameLabel.text = ""
                 secondLabel.hidden = true
                 thirdLabel.hidden = true
