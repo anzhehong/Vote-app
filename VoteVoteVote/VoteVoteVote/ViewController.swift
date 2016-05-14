@@ -83,6 +83,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 currentDefault.setObject([NSData](), forKey: "items")
                 addThisItemToUserDefault(currentItem)
             }
+            nameTextField.text = ""
         }
     }
     
