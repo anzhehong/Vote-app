@@ -8,11 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController,UITextFieldDelegate {
+class ViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var nameTextField: UITextField!
-    
-    @IBOutlet weak var ideaTextField: UITextField!
 
     @IBOutlet weak var addIdeaButton: UIButton!
     
@@ -26,14 +24,15 @@ class ViewController: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         nameTextField.delegate = self
-        ideaTextField.delegate = self
         updateUI()
     }
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.keyboardWillShow(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,7 +57,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
     
     private func updateUI(){
         setTextFieldStyle(nameTextField)
-        setTextFieldStyle(ideaTextField)
         setButtonStyle(addIdeaButton)
         setButtonStyle(startVotingButton)
     }
@@ -70,19 +68,22 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         let currentItem = ItemModel()
         currentItem.name = nameTextField.text
-        currentItem.idea = ideaTextField.text
-        if currentItem.name == "" || currentItem.idea == "" {
-            UIAlertView(title: "增加项目", message: "请输入有效内容！", delegate: nil, cancelButtonTitle: "ok").show()
+        
+        if currentItem.name == "" {
+            let alertView = UIAlertController(title: "增加项目", message: "请输入有效内容", preferredStyle: .Alert)
+            alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alertView, animated: true, completion: nil)
         } else {
             currentItem.voteCount = 0
             if let _ = currentDefault.objectForKey("items") {
                 //已经存在此userdefault
                 addThisItemToUserDefault(currentItem)
-            }else {
+            } else {
                 //需要新建此userdefault
                 currentDefault.setObject([NSData](), forKey: "items")
                 addThisItemToUserDefault(currentItem)
             }
+            nameTextField.text = ""
         }
     }
     
@@ -90,8 +91,11 @@ class ViewController: UIViewController,UITextFieldDelegate {
         var list = NSUserDefaults.standardUserDefaults().objectForKey("items") as? [NSData]
         list?.append(thisItem.modelToNSData()!)
         NSUserDefaults.standardUserDefaults().setObject(list, forKey: "items")
-        presentItemCount++
-        UIAlertView(title: "增加项目", message: "您已成功添加项目！", delegate: nil, cancelButtonTitle: "ok").show()
+        presentItemCount += 1
+        
+        let alertView = UIAlertController(title: "增加竞选人", message: "成功添加", preferredStyle: .Alert)
+        alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(alertView, animated: true, completion: nil)
     }
     
     //MARK: - keyboard
@@ -99,27 +103,31 @@ class ViewController: UIViewController,UITextFieldDelegate {
         if let userInfo = notification.userInfo {
             if let keyboardSize =  (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue() {
                 keyboardHeight = keyboardSize.height
+                
+                if isTheViewUp {
+                    viewGoesUpWithTextField(nil)
+                } else {
+                    viewGoesUpWithTextField(nameTextField)
+                }
             }
         }
     }
     //MARK: - UITextFildDelegate
-    func textFieldDidBeginEditing(textField: UITextField) {
-        viewGoesUpWithTextField(textField)
-    }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        
         textField.resignFirstResponder()
         
         return true
     }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         nameTextField.resignFirstResponder()
-        ideaTextField.resignFirstResponder()
+
         if isTheViewUp {
             viewGoesUpWithTextField(nil)
         }
     }
+    
     
     func viewGoesUpWithTextField(textField: UITextField?) {
         var offset = 0 as CGFloat

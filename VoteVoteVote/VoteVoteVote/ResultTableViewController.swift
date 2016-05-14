@@ -9,11 +9,9 @@
 import UIKit
 
 class ResultTableViewController: UITableViewController {
-    @IBOutlet weak var firstIdeaLabel: UILabel!
+
     @IBOutlet weak var firstNameLabel: UILabel!
-    @IBOutlet weak var secondIdeaLabel: UILabel!
     @IBOutlet weak var secondNameLabel: UILabel!
-    @IBOutlet weak var thirdIdeaLabel: UILabel!
     @IBOutlet weak var thirdNameLabel: UILabel!
     
     
@@ -36,33 +34,61 @@ class ResultTableViewController: UITableViewController {
         let count = itemList.count
         if count > 0{
             firstNameLabel.text = itemList[0].name
-            firstIdeaLabel.text = itemList[0].idea
             if count > 1 {
                 secondNameLabel.text = itemList[1].name
-                secondIdeaLabel.text = itemList[1].idea
                 if count > 2 {
                     thirdNameLabel.text = itemList[2].name
-                    thirdIdeaLabel.text = itemList[2].idea
                 }else {
                     thirdNameLabel.text = ""
-                    thirdIdeaLabel.text = ""
                     thirdLabel.hidden = true
                 }
             }else {
-                secondIdeaLabel.text = ""
                 secondNameLabel.text = ""
-                thirdIdeaLabel.text = ""
                 thirdNameLabel.text = ""
                 secondLabel.hidden = true
                 thirdLabel.hidden = true
             }
         }
         
+//        judge if there are two men whose vote number is equal and record the two men
+        var equal = false
+        var position = [Int]()
+        
+        if itemList.count >= 3 {
+            for i in 0...1 {
+                if itemList[i].voteCount == itemList[i + 1].voteCount {
+                    position.append(i + 1)
+                    equal = true
+                }
+            }
+        } else if itemList.count == 2 {
+            if itemList[0].voteCount == itemList[1].voteCount {
+                position.append(0)
+                equal = true
+            }
+        }
+        
+        if equal {
+            self.showAlert(&position)
+            
+        }
+        
+    }
+    
+    private func showAlert(inout position: [Int]) {
+        let alertView = UIAlertController(title: "提示", message: "第\(position[0])名与第\(position[0] + 1)名得票相等", preferredStyle: .Alert)
+        alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (action) in
+            position.removeAtIndex(0)
+            if !position.isEmpty {
+                self.showAlert(&position)
+            }
+        }))
+        self.presentViewController(alertView, animated: true, completion: nil)
     }
     
     func sortDataListDes(dataList: [NSData])->[ItemModel] {
         var itemList: [ItemModel] = []
-        print(dataList.count)
+//        print(dataList.count)
         for i in 0...dataList.count-1 {
             itemList.append(ItemModel.NSDataToModel(dataList[i]))
         }
@@ -79,7 +105,7 @@ class ResultTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let _ = NSUserDefaults.standardUserDefaults().objectForKey("items"){
+        if let _ = NSUserDefaults.standardUserDefaults().objectForKey("items") {
             return 3
         }
         return 0
