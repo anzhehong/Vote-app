@@ -45,14 +45,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
         textField.borderStyle = UITextBorderStyle.None
         textField.layer.borderColor = UIColor.whiteColor().CGColor
         textField.layer.borderWidth = 2.0
-        textField.layer.cornerRadius = 25.0
+        textField.layer.cornerRadius = 10.0
         let paddingView = UIView(frame: CGRectMake(0, 0, 25, 25))
         textField.leftView = paddingView
         textField.leftViewMode = UITextFieldViewMode.Always
     }
     
     private func setButtonStyle(button: UIButton){
-        button.layer.cornerRadius = 25.0
+        button.layer.cornerRadius = 10.0
     }
     
     private func updateUI(){

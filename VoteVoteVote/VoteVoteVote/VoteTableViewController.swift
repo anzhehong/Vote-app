@@ -57,15 +57,18 @@ class VoteTableViewController: UITableViewController {
         dataList![sender.tag] = itemToChange.modelToNSData()!
         NSUserDefaults.standardUserDefaults().setObject(dataList, forKey: "items")
         
-        UIView.animateWithDuration(0.2, animations: {
-                sender.transform = CGAffineTransformMakeScale(1.05, 1.05)
-            }, completion: {(true) in
-                sender.transform = CGAffineTransformMakeScale(1, 1)
-                
-                let alertView = UIAlertController(title: "Great", message: "成功投了一票", preferredStyle: .Alert)
-                alertView.addAction(UIAlertAction(title: "下一票", style: .Default, handler: nil))
-                self.presentViewController(alertView, animated: true, completion: nil)
-        })
+//        UIView.animateWithDuration(0.2, animations: {
+//                sender.transform = CGAffineTransformMakeScale(1.05, 1.05)
+//            }, completion: {(true) in
+//                sender.transform = CGAffineTransformMakeScale(1, 1)
+//                
+//                let alertView = UIAlertController(title: "Great", message: "成功投了一票", preferredStyle: .Alert)
+//                alertView.addAction(UIAlertAction(title: "下一票", style: .Default, handler: nil))
+//                self.presentViewController(alertView, animated: true, completion: nil)
+//        })
+        let alertView = UIAlertController(title: "Great", message: "成功投了一票", preferredStyle: .Alert)
+        alertView.addAction(UIAlertAction(title: "下一票", style: .Default, handler: nil))
+        self.presentViewController(alertView, animated: true, completion: nil)
         
     }
 }
